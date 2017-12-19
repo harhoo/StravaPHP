@@ -209,6 +209,9 @@ class REST implements ServiceInterface {
             'private' => $private,
             'trainer' => $trainer,
         );
+        if (is_null($parameters['private'])) {
+            unset($parameters['private']); //does not work if private set to null, which is needed to respect user settings [although this doesn't work, which seems to be a Strava thing]           
+        }
         $result = $this->adapter->post($path, $parameters, $this->getHeaders());
         return $this->format($result);
     }
@@ -225,6 +228,9 @@ class REST implements ServiceInterface {
             'external_id' => $external_id,
             'file' => $file,
         );
+        if (is_null($parameters['private'])) {
+            unset($parameters['private']); //does not work if private set to null, which is needed to respect user settings            
+        }
         $result = $this->adapter->post($path, $parameters, $this->getHeaders());
         return $this->format($result);
     }
